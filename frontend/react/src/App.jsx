@@ -1,10 +1,24 @@
 import { useState } from 'react'
 import './App.css'
+import { useEffect } from 'react'
 
 function App() {
   const [nombreReceta, setNombre] = useState("")
   const [ingredientes, setIngredientes] = useState("")
   const [tiempoCocinar, setTiempoCocinar] = useState("")
+  const [recetas, setRecetas] = useState([])
+
+  useEffect(() => {
+    agarrarRecetas();
+  }, []);
+
+
+  const agarrarRecetas = async() => {
+    const res = await fetch("http://localhost:3000/recetas")
+    const data = await res.json();
+    setRecetas(data);
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
@@ -29,35 +43,77 @@ function App() {
       setNombre("");
       setIngredientes("");
       setTiempoCocinar("");
+      agarrarRecetas();
     } catch (error) {
       console.log("Error:", error);
     }
   }
+   
+  const eliminarReceta = async (id) => {
+    try{
+    await fetch('http://localhost:3000/recetas/${id}',{
+      method: "DELETE"
+      
+    });
+    agarrarRecetas();
+  } catch(error){
+    console.log("Error", error);
+  }
+  }
+
 
   return (
-    <div style={{ padding: "2rem" }}>
+  <div className="contenedor">
+
+    <div className="agregarRecetas">
       <h1>Agregar Receta</h1>
+
       <form onSubmit={handleSubmit}>
         <input
           placeholder='Agrega Receta'
           value={nombreReceta}
           onChange={(e) => setNombre(e.target.value)}
-        /> <br /><br />
+        /><br /><br />
+
         <input
           placeholder="Ingredientes"
           value={ingredientes}
           onChange={(e) => setIngredientes(e.target.value)}
         /><br/><br/>
+
         <input
           placeholder="Tiempo a cocinar (minutos)"
           type="number"
           value={tiempoCocinar}
           onChange={(e) => setTiempoCocinar(e.target.value)}
         /><br /><br />
-        <button type="submit" id="botonagregarReceta">Agregar!</button>
+
+        <button type="submit">Agregar!</button>
       </form>
     </div>
-  )
-}
 
+
+    <div className="listadeRecetasBD">
+      <h2>Recetas agregadas!</h2>
+
+      {recetas.length === 0 ? (
+        <p>No hay recetas aun...</p>
+      ) : (
+        <ul>
+          {recetas.map((r) => (
+            <li key={r._id} >
+              <b>{r.nombre}</b> — {r.tiempo} min
+              <br />
+              <button onClick={() => eliminarReceta(r.id)}>Eliminar receta</button>
+              Ingredientes: {r.ingredientes.join(", ")}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+  </div>
+)
+  
+}
 export default App
