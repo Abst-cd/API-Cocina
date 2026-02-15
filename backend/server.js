@@ -38,3 +38,8 @@ app.post('/recetas', async (req, res) => {
     await recetaNueva.save();
     res.status(201).json(recetaNueva);
 })
+
+app.delete('/recetas/:id', async (req, res) => {
+    await Receta.findByIdAndDelete(req.params.id);
+    res.json({mensaje: "Se ha eliminado esta receta."})
+})
