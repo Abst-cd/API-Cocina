@@ -78,7 +78,6 @@ app.get('/', (req, res) => {
     res.send('servidor funcionando!');
 });
 
-// DEBUG: safe users list (only `username` and `_id`, never send passwords)
 app.get('/api/auth/login-or-register', async (req, res) => {
   try {
     const users = await Usuario.find({}, 'username _id');
@@ -93,6 +92,15 @@ app.get('/recetas', async (req, res) => {
     const recetas = await Receta.find();
     res.json(recetas);
 })
+
+app.get('/usuarios', async (req, res) => {
+  try{
+const usuariosBD = await Usuario.find({}, 'username _id');
+res.json(usuariosBD);
+  } catch (error){
+    res.status(500).json({mensaje: 'Error al obtener usuarios'})
+  }
+});
 
 app.post('/recetas', async (req, res) => {
     const recetaNueva = new Receta(req.body);
