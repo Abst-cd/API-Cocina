@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
     res.send('servidor funcionando!');
 });
 
-app.get('/api/auth/login', autenticarToken, async (req, res) => {
+app.get('/api/auth/login', async (req, res) => {
   try {
     const users = await Usuario.find({}, 'username _id');
     res.json({ success: true, users });
@@ -91,12 +91,12 @@ app.get('/api/auth/login', autenticarToken, async (req, res) => {
   }
 });
 
-app.get('/recetas', autenticarToken, async (req, res) => {
+app.get('/recetas', async (req, res) => {
     const recetas = await Receta.find();
     res.json(recetas);
 })
 
-app.get('/usuarios', autenticarToken, async (req, res) => {
+app.get('/usuarios',  async (req, res) => {
   try{
 const usuariosBD = await Usuario.find({}, 'username _id');
 res.json(usuariosBD);
@@ -105,20 +105,20 @@ res.json(usuariosBD);
   }
 });
 
-app.post('/recetas', autenticarToken, async (req, res) => {
+app.post('/recetas',  async (req, res) => {
     const recetaNueva = new Receta(req.body);
     await recetaNueva.save();
     await actualizarArchivoRecetas();
     res.status(201).json(recetaNueva);
 })
 
-app.delete('/recetas/:id', autenticarToken, async (req, res) => {
+app.delete('/recetas/:id', async (req, res) => {
     await Receta.findByIdAndDelete(req.params.id);
     await actualizarArchivoRecetas();
     res.json({mensaje: "Se ha eliminado esta receta."})
 })
 
-app.put('/recetas/:id', autenticarToken, async (req, res) => {
+app.put('/recetas/:id',  async (req, res) => {
   try {
     const recetaActualizada = await Receta.findByIdAndUpdate(
       req.params.id,

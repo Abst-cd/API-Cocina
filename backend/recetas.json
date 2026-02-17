@@ -1,1 +1,48 @@
-[]
+[
+  {
+    "_id": "6993422f6bc06de6e5bcf95f",
+    "nombre": "aaa",
+    "ingredientes": [
+      "papa"
+    ],
+    "tiempo": 2,
+    "__v": 0
+  },
+  {
+    "_id": "6993503850e89a720a773bbc",
+    "nombre": "aaaaa",
+    "ingredientes": [
+      "jfsajksf",
+      " jdajksflkad"
+    ],
+    "tiempo": 45,
+    "__v": 0
+  },
+  {
+    "_id": "699493dcd860219edebfb61c",
+    "nombre": "aaa",
+    "ingredientes": [
+      "fddsg"
+    ],
+    "tiempo": 23,
+    "__v": 0
+  },
+  {
+    "_id": "69949465754388a2822ad419",
+    "nombre": "aa",
+    "ingredientes": [
+      "dsgsds"
+    ],
+    "tiempo": 3,
+    "__v": 0
+  },
+  {
+    "_id": "69949484754388a2822ad41d",
+    "nombre": "aa",
+    "ingredientes": [
+      "d"
+    ],
+    "tiempo": 2,
+    "__v": 0
+  }
+]
