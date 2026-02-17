@@ -106,16 +106,24 @@ res.json(usuariosBD);
 });
 
 app.post('/recetas',  async (req, res) => {
+  try {
     const recetaNueva = new Receta(req.body);
     await recetaNueva.save();
     await actualizarArchivoRecetas();
     res.status(201).json(recetaNueva);
+  } catch (error){
+    res.status(500).json({mensaje: 'Error del servidor'})
+  }
 })
 
 app.delete('/recetas/:id', async (req, res) => {
+  try {
     await Receta.findByIdAndDelete(req.params.id);
     await actualizarArchivoRecetas();
     res.json({mensaje: "Se ha eliminado esta receta."})
+  } catch (error) {
+    res.json({mensaje: 'Error del servidor'})
+  }
 })
 
 app.put('/recetas/:id',  async (req, res) => {
