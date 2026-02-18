@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
     res.send('servidor funcionando!');
 });
 
-app.get('/api/auth/login', autenticarToken, async (req, res) => {
+app.get('/api/auth/login', async (req, res) => {
   try {
     const users = await Usuario.find({}, 'username _id');
     res.json({ success: true, users });
