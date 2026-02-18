@@ -17,4 +17,4 @@ function autenticarToken(req, res, next) {
   });
 }
 
-module.exports = autenticarToken;
+
